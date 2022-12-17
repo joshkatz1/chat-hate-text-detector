@@ -28,9 +28,7 @@ const Messages: React.FC<MessagesProps> = ({ userId, conversationId }) => {
       toast.error(message);
     },
   });
-  if (error) {
-    return null;
-  }
+
 
   const subscribeToMoreMessages = (conversationId: string) => {
     return subscribeToMore({
@@ -43,7 +41,7 @@ const Messages: React.FC<MessagesProps> = ({ userId, conversationId }) => {
 
         const newMessage = subscriptionData.data.messageSent;
         return Object.assign({}, prev, {
-          messages: [newMessage, ...prev.messages],
+          messages: newMessage.sender.id ===userId ? prev.messages : [newMessage, ...prev.messages],
         });
       },
     });
@@ -54,6 +52,10 @@ const Messages: React.FC<MessagesProps> = ({ userId, conversationId }) => {
 
     return () => unsubscribe();
   }, [conversationId]);
+
+  if (error) {
+    return null;
+  }
   return (
     <Flex direction="column" justify="flex-end" overflow="hidden">
       {loading && (
