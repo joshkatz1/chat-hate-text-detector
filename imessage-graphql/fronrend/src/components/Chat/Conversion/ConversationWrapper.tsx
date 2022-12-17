@@ -1,10 +1,10 @@
-import { useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import { Box, Skeleton } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import ConversationList from "./ConversationList";
 import ConversationOperations from "../../../graphql/operations/conversation";
 import { ConversationsData } from "../../../utils/types";
-import { ConversationPopulated } from "../../../../../backend/src/utils/types";
+import { ConversationPopulated, ParticipantPopulated } from "../../../../../backend/src/utils/types";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import SkeletonLoader from "../../common/SkeletonLoader";
@@ -15,6 +15,9 @@ interface ConversationWrapperProps {
 const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
   session,
 }) => {
+  const { user: { id: userId } } = session
+  const router = useRouter();
+  const { conversationId } = router.query;
   const {
     data: conversationsData,
     error: conversationsError,
@@ -23,15 +26,87 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
   } = useQuery<ConversationsData, null>(
     ConversationOperations.Queries.conversations
   );
+  
+  const [markConversationAsRead] = useMutation<{ markConversationAsRead: boolean }, { userId: string, conversationId: string | undefined }>(ConversationOperations.Mutations.markConversationAsRead)
+  
+  
+  
   console.log("here is conversation data", conversationsData);
 
-  const router = useRouter();
-  const {
-    query: { conversationId },
-  } = router;
-  const onViewConversation = async (conversationId: string) => {
+  const onViewConversation = async (
+    conversationId: string | undefined,
+    hasSeenLatestMessage: boolean | undefined
+  ) => {
     router.push({ query: { conversationId } });
-  };
+    if (hasSeenLatestMessage) return;
+
+    try {
+      await markConversationAsRead({
+        variables: {
+          userId,
+          conversationId,
+        },
+        optimisticResponse: {
+          markConversationAsRead: true,
+        },
+        update: (cache) => {
+          /**
+           * get conversationparticipants from the cache
+           */
+           const participantsFragment = cache.readFragment<{
+            participants: Array<ParticipantPopulated>;
+          }>({
+            id: `Conversation:${conversationId}`,
+            fragment: gql`
+              fragment Participants on Conversation {
+                participants {
+                  user {
+                    id
+                    username
+                  }
+                  hasSeenLatestMessage
+                }
+              }
+            `,
+          });
+
+          if (!participantsFragment) return;
+      
+          const participants = [...participantsFragment.participants]
+          const userParticipantIdx = participants.findIndex((participant) => {
+            participant.user.id === userId
+          })
+          if (userParticipantIdx === -1) return
+          const userParticipant = participants[userParticipantIdx]
+
+          /**
+           * update participants to show latestMessage as read
+           **/
+          participants[userParticipantIdx] = {
+            ...userParticipant,
+            hasSeenLatestMessage: true,
+          }
+        /**
+         * update cache
+         */
+          
+         cache.writeFragment({
+          id: `Conversation:${conversationId}`,
+          fragment: gql`
+            fragment UpdatedParticipants on Conversation {
+              participants
+            }
+          `,
+          data: {
+            participants,
+          },
+        });
+      },
+    });
+  } catch (error) {
+    console.log("onViewConversation error", error);
+  }
+};
 
   const subscribeToNewConversations = () => {
     subscribeToMore({
@@ -64,7 +139,7 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
   return (
     <Box
       width={{ base: "100%", md: "400px" }}
-      flexDirection='column'
+      flexDirection="column"
       bg="whiteAlpha.50"
       py={6}
       gap={4}

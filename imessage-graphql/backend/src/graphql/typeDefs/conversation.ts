@@ -4,6 +4,7 @@ const typeDefs = gql`
 scalar Date
   type Mutation {
     createConversation(participantIds: [String]): CreateConversationResponse
+    markConversationAsRead(userId: String!, conversationId: String!):Boolean
   }
 
   type CreateConversationResponse {
