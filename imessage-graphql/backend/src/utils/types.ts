@@ -54,6 +54,11 @@ export interface SendMessageArguments {
   export type MessagePopulated = Prisma.MessageGetPayload<{
     include: typeof messagePopulated;
   }>;
+export interface ConversationUpdatedSubscriptionPayload{
+    conversationUpdated: {
+      conversation: ConversationPopulated;
+    };
+  }
 
 export type ConversationPopulated = Prisma.ConversationGetPayload<{include: typeof conversationPopulated}>
 

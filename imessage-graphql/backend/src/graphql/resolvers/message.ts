@@ -142,9 +142,10 @@ const resolvers = {
           include: conversationPopulated,
         });
         pubsub.publish("MESSAGE_SENT", { messageSent: newMessage });
-        // pubsub.publish("conversation update", {
-        //   conversationUpdate: conversation,
-        // });
+        pubsub.publish("CONVERSATION_UPDATED", {
+          conversationUpdated: conversation
+  
+        });
       } catch (error) {
         console.log("sendMessage error", error);
         throw new GraphQLError("error sending message");
@@ -166,6 +167,7 @@ const resolvers = {
           args: { conversationId: string },
           context: GraphQLContext
         ) => {
+
           return payload.messageSent.conversationId === args.conversationId;
         }
       ),

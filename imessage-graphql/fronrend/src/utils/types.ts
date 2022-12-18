@@ -53,6 +53,11 @@ export interface ConversationVariables{
   
 
 }
+export interface ConversationUpdatedData{
+  conversationUpdated: {
+    conversation: ConversationPopulated
+  }
+}
 
 /**
  * Messages

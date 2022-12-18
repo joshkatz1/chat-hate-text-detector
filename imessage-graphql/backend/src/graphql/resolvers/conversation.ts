@@ -1,7 +1,8 @@
 import { Conversation, Prisma } from "@prisma/client";
 import { GraphQLError } from "graphql";
-import { ConversationPopulated, GraphQLContext } from "./../../utils/types";
+import { ConversationUpdatedSubscriptionPayload, ConversationPopulated, GraphQLContext } from "./../../utils/types";
 import { withFilter } from "graphql-subscriptions";
+import { userIsConversationParticipant } from "../../utils/functions";
 
 const resolvers = {
   Query: {
@@ -150,6 +151,48 @@ const resolvers = {
             (p) => p.userId === session?.user?.id
           );
           return userIsParticipant;
+        }
+      ),
+    },
+    conversationUpdated: {
+      subscribe: withFilter(
+        (_: any, __: any, context: GraphQLContext) => {
+          const { pubsub } = context;
+
+          return pubsub.asyncIterator(["CONVERSATION_UPDATED"]);
+        },
+        (
+          payload: ConversationUpdatedSubscriptionPayload,
+          _,
+          context: GraphQLContext
+        ) => {
+          const { session } = context;
+          console.log("ceck subscribe")
+          if (!session?.user) {
+            throw new GraphQLError("Not authorized");
+          }
+
+          const { id: userId } = session.user;
+          const {
+            conversationUpdated: {
+              conversation: { participants },
+            },
+          } = payload;
+
+          const userIsParticipant = userIsConversationParticipant(
+            participants,
+            userId
+          );
+
+          const userSentLatestMessage =
+            payload.conversationUpdated.conversation.latestMessage?.senderId ===
+            userId;
+
+          
+
+          return (
+            (userIsParticipant && !userSentLatestMessage) 
+          );
         }
       ),
     },

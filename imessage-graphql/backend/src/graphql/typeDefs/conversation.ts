@@ -10,6 +10,9 @@ scalar Date
   type CreateConversationResponse {
     conversationId: String
   }
+  type conversationUpdatedSubscriptionPayload {
+    conversationId: String
+  }
 
   type Conversation{
     id: String
@@ -31,6 +34,9 @@ scalar Date
 
   type Subscription {
     conversationCreated: Conversation
+  }
+  type Subscription {
+    conversationUpdated: conversationUpdatedSubscriptionPayload
   }
 
 `;
