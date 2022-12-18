@@ -58,6 +58,13 @@ export interface ConversationUpdatedData{
     conversation: ConversationPopulated
   }
 }
+// export interface ConversationUpdatedData {
+//   conversationUpdated: {
+//     conversation: Omit<ConversationPopulated, "latestMessage"> & {
+//       latestMessage: MessagePopulated;
+//     };
+//   };
+// }
 
 /**
  * Messages

@@ -154,6 +154,7 @@ const resolvers = {
         }
       ),
     },
+    
     conversationUpdated: {
       subscribe: withFilter(
         (_: any, __: any, context: GraphQLContext) => {
@@ -167,12 +168,12 @@ const resolvers = {
           context: GraphQLContext
         ) => {
           const { session } = context;
-          console.log("ceck subscribe")
           if (!session?.user) {
             throw new GraphQLError("Not authorized");
           }
 
           const { id: userId } = session.user;
+          console.log(payload)
           const {
             conversationUpdated: {
               conversation: { participants },

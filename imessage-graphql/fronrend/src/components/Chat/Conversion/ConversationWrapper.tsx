@@ -49,6 +49,11 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
 
 
         if (!conversationsData) return;
+
+const currentlyViewConversation = updatedConversation.id === conversationId;
+        if (currentlyViewConversation) {
+        onViewConversation(conversationId,false)
+}
       }
     }
   )
