@@ -1,4 +1,4 @@
-import { Conversation, Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { GraphQLError } from "graphql";
 import { ConversationUpdatedSubscriptionPayload, ConversationPopulated, GraphQLContext, ConversationDeletedSubscriptionPayload } from "./../../utils/types";
 import { withFilter } from "graphql-subscriptions";
