@@ -69,6 +69,7 @@ const Messages: React.FC<MessagesProps> = ({ userId, conversationId }) => {
             <MessageItem
               message={message}
               sentByMe={message.sender.id === userId}
+              key={message.id}
             />
           ))}
         </Flex>

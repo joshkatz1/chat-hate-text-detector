@@ -5,6 +5,7 @@ scalar Date
   type Mutation {
     createConversation(participantIds: [String]): CreateConversationResponse
     markConversationAsRead(userId: String!, conversationId: String!):Boolean
+   deleteConversation(conversationId: String!):Boolean
   }
 
   type CreateConversationResponse {
@@ -13,6 +14,10 @@ scalar Date
   type ConversationUpdatedSubscriptionPayload {
     conversation: Conversation
   }
+  type ConversationDeletedResponse {
+    id: String
+  }
+
 
   type Conversation{
     id: String
@@ -38,7 +43,9 @@ scalar Date
   type Subscription {
     conversationUpdated: ConversationUpdatedSubscriptionPayload
   }
-
+  type Subscription {
+    conversationDeleted: ConversationDeletedResponse
+  }
 `;
 
 export default typeDefs;

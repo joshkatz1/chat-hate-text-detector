@@ -14,7 +14,7 @@ const Home: NextPage = () => {
       <Box>
         {session?.user.username ?   (
           <>
-            <Button onClick={() => { signOut() }}>sign out</Button>
+            {/* <Button onClick={() => { signOut() }}>sign out</Button> */}
             <Chat session={session} />
           </>
         

@@ -34,7 +34,7 @@ interface ConversationItemProps {
   //   onEditConversation?: () => void;
     hasSeenLatestMessage?: boolean | undefined;
   //   selectedConversationId?: string;
-  //   onDeleteConversation?: (conversationId: string) => void;
+    onDeleteConversation: (conversationId: string) => void;
   //   onLeaveConversation?: (conversation: ConversationPopulated) => void;
 }
 
@@ -46,7 +46,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   //   selectedConversationId,
   hasSeenLatestMessage,
   //   onEditConversation,
-  //   onDeleteConversation,
+    onDeleteConversation,
   //   onLeaveConversation,
 }) => {
   console.log("HERE IS CONVERSATION", conversation);
@@ -85,6 +85,8 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
               event.stopPropagation();
               //   onEditConversation();
             }}
+            bg="#2d2d2d"
+              _hover={{ bg: "whiteAlpha.300" }}
           >
             Edit
           </MenuItem>
@@ -95,6 +97,8 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
                 event.stopPropagation();
                 // onLeaveConversation(conversation);
               }}
+              bg="#2d2d2d"
+              _hover={{ bg: "whiteAlpha.300" }}
             >
               Leave
             </MenuItem>
@@ -103,8 +107,10 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
               icon={<MdDeleteOutline fontSize={20} />}
               onClick={(event) => {
                 event.stopPropagation();
-                // onDeleteConversation(conversation.id);
+                onDeleteConversation(conversation.id);
               }}
+              bg="#2d2d2d"
+              _hover={{ bg: "whiteAlpha.300" }}
             >
               Delete
             </MenuItem>

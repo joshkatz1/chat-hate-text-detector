@@ -58,6 +58,11 @@ export interface ConversationUpdatedData{
     conversation: ConversationPopulated
   }
 }
+export interface ConversationDeletedData{
+  conversationDeleted: {
+    id: string
+  }
+}
 // export interface ConversationUpdatedData {
 //   conversationUpdated: {
 //     conversation: Omit<ConversationPopulated, "latestMessage"> & {

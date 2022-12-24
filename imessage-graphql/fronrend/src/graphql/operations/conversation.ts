@@ -44,6 +44,12 @@ export default {
         
   }
   `,
+    deleteConversation: gql`
+    mutation deleteConversation($conversationId: String!) {
+      deleteConversation(conversationId: $conversationId)
+    }
+    `
+    
   },
 
   Subscriptions: {
@@ -63,5 +69,14 @@ export default {
         }
       }
     `,
-  },
+  
+  conversationDeleted: gql`
+  subscription ConversationDeleted {
+    conversationDeleted {
+     id
+    } 
+  } 
+
+  `,
+},
 };

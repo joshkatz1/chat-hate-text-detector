@@ -3,7 +3,7 @@ import { Box, Skeleton } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import ConversationList from "./ConversationList";
 import ConversationOperations from "../../../graphql/operations/conversation";
-import { ConversationsData, ConversationUpdatedData } from "../../../utils/types";
+import { ConversationDeletedData, ConversationsData, ConversationUpdatedData } from "../../../utils/types";
 import { ConversationPopulated, ParticipantPopulated } from "../../../../../backend/src/utils/types";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
@@ -50,13 +50,38 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
 
         if (!conversationsData) return;
 
-const currentlyViewConversation = updatedConversation.id === conversationId;
+        const currentlyViewConversation = updatedConversation.id === conversationId;
         if (currentlyViewConversation) {
-        onViewConversation(conversationId,false)
-}
+          onViewConversation(conversationId, false)
+        }
       }
     }
-  )
+  );
+  useSubscription<ConversationDeletedData, null>(ConversationOperations.Subscriptions.conversationDeleted, {
+    onData: ({ client, data }) => {
+      console.log("here is sub data", data)
+      const { data: subscriptionData } = data;
+      if (!subscriptionData) return;
+
+      const existing = client.readQuery<ConversationsData>({
+        query: ConversationOperations.Queries.conversations,
+      })
+      if (!existing) return;
+      const { conversations } = existing
+      const { conversationDeleted: {
+        id: deletedConversationId
+      }, } = subscriptionData;
+      client.writeQuery<ConversationsData>({
+        query: ConversationOperations.Queries.conversations,
+        data: {
+          conversations: conversations.filter(
+            (conversation) => conversation.id !== deletedConversationId
+          ),
+        },
+      });
+    },
+  }
+);
     
 
   
