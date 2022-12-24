@@ -17,7 +17,7 @@ const ConversationList: React.FC<ConversationListProps> = ({ session,conversatio
   
   const [isOpen, setIsOpen] = useState(false)
 
-  
+    const sortedConversation = [...conversations].sort((a, b)=> b.updatedAt.valueOf() - a.updatedAt.valueOf())
   
     const onOpen = () => { setIsOpen(true) }
     const onClose = () => { setIsOpen(false) }
@@ -37,7 +37,7 @@ const ConversationList: React.FC<ConversationListProps> = ({ session,conversatio
         <Text textAlign='center' color="whiteAlpha.800">find or start a conversation</Text>
           </Box>
           <ConversationModal isOpen={isOpen} onClose={onClose} session={session}  />
-      {conversations.map(conversation => {
+      {sortedConversation.map(conversation => {
         const participant = conversation.participants.find((p)=> p.user.id === userId)
         return (
         <ConversationItem
