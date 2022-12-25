@@ -75,7 +75,6 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
       onClick={handleClick}
       onContextMenu={handleClick}
       position="relative"
-      border="1px solid blue"
     >
       <Menu isOpen={menuOpen} onClose={() => setMenuOpen(false)}>
         <MenuList bg="#2d2d2d">

@@ -37,7 +37,6 @@ const MessagesHeader: React.FC<MessagesHeaderProps> = ({
       spacing={6}
       py={5}
       px={{ base: 4, md: 0 }}
-      borderBottom="1px solid"
       borderColor="whiteAlpha.200"
     >
       <Button
