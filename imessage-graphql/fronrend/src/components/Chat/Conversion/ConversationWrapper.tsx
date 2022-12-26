@@ -4,10 +4,11 @@ import { Session } from "next-auth";
 import ConversationList from "./ConversationList";
 import ConversationOperations from "../../../graphql/operations/conversation";
 import { ConversationDeletedData, ConversationsData, ConversationUpdatedData } from "../../../utils/types";
-import { ConversationPopulated, ParticipantPopulated } from "../../../../../backend/src/utils/types";
+// import { ConversationPopulated, ParticipantPopulated } from "../../../../../backend/src/utils/types";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import SkeletonLoader from "../../common/SkeletonLoader";
+import { ConversationPopulated, ParticipantPopulated } from "../../../utils/frontendFunc";
 interface ConversationWrapperProps {
   session: Session;
 }

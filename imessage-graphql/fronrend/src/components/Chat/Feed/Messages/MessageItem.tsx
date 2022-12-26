@@ -1,8 +1,9 @@
 import { Avatar, Box, Flex, Stack, Text } from "@chakra-ui/react";
 import { formatRelative } from "date-fns";
 import React from "react";
-import { MessagePopulated } from "../../../../../../backend/src/utils/types";
+// import { MessagePopulated } from "../../../../../../backend/src/utils/types";
 import enUS from "date-fns/locale/en-US";
+import { MessagePopulated } from "../../../../utils/frontendFunc";
 interface MessageItemProps {
   message: MessagePopulated;
   sentByMe: boolean;

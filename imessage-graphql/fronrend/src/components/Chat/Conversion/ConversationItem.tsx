@@ -17,7 +17,12 @@ import { MdDeleteOutline } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
 import { AiOutlineEdit } from "react-icons/ai";
 import { formatUsernames } from "../../../utils/functions";
-import { ConversationPopulated } from "../../../../../backend/src/utils/types";
+import { ConversationPopulated } from "../../../utils/frontendFunc";
+
+// import { ConversationPopulated } from "../../../../../backend/src/utils/types";
+
+  
+
 
 const formatRelativeLocale = {
   lastWeek: "eeee",

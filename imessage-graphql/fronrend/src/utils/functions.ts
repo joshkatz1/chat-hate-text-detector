@@ -1,4 +1,6 @@
-import { ParticipantPopulated } from "../../../backend/src/utils/types";
+// import { ParticipantPopulated } from "../../../backend/src/utils/types";
+
+import { ParticipantPopulated } from "./frontendFunc";
 
 export const formatUsernames = (
   participants: Array<ParticipantPopulated>,

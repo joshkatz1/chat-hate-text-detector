@@ -1,4 +1,6 @@
-import {ConversationPopulated, MessagePopulated} from '../../../backend/src/utils/types'
+// import {ConversationPopulated, MessagePopulated} from '../../../backend/src/utils/types'
+
+import { ConversationPopulated, MessagePopulated } from "./frontendFunc";
 
   /**
    * user

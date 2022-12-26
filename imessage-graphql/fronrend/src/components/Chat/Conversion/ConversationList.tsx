@@ -3,13 +3,13 @@ import { Flex, Box, Text, Button } from "@chakra-ui/react";
 import { Session } from "next-auth";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { ConversationPopulated } from "../../../../../backend/src/utils/types";
-import Modal from "../Modal";
+// import { ConversationPopulated } from "../../../../../backend/src/utils/types";
 import ConversationModal from '../Modal'
 import ConversationItem from "./ConversationItem";
 import ConversationOperation from "../../../graphql/operations/conversation"
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
+import { ConversationPopulated } from "../../../utils/frontendFunc";
 interface ConversationListProps {
   session: Session;
   conversations: Array<ConversationPopulated>;
