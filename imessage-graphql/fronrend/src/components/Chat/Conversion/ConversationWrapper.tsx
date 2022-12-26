@@ -53,7 +53,9 @@ const ConversationWrapper: React.FC<ConversationWrapperProps> = ({
 
         const currentlyViewConversation = updatedConversation.id === conversationId;
         if (currentlyViewConversation) {
-          onViewConversation(conversationId, false)
+          if (typeof conversationId === 'string') {
+            onViewConversation(conversationId, false)
+          }
         }
       }
     }

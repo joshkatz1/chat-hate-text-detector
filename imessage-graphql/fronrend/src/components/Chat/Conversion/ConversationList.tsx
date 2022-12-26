@@ -9,7 +9,7 @@ import ConversationItem from "./ConversationItem";
 import ConversationOperation from "../../../graphql/operations/conversation"
 import toast from "react-hot-toast";
 import { signOut } from "next-auth/react";
-import { ConversationPopulated } from "../../../utils/frontendFunc";
+import { ConversationPopulated, ParticipantPopulated } from "../../../utils/frontendFunc";
 interface ConversationListProps {
   session: Session;
   conversations: Array<ConversationPopulated>;
@@ -70,7 +70,7 @@ const ConversationList: React.FC<ConversationListProps> = ({ session,conversatio
           </Box>
           <ConversationModal isOpen={isOpen} onClose={onClose} session={session}  />
       {sortedConversation.map(conversation => {
-        const participant = conversation.participants.find((p)=> p.user.id === userId)
+        const participant = conversation.participants.find((p:ParticipantPopulated)=> p.user.id === userId)
         return (
         <ConversationItem
             key={conversation.id}
