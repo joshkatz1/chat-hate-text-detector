@@ -1,5 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client';
-import { PrismaClientOptions } from '@prisma/client/runtime';
+import { Prisma, PrismaClient } from "@prisma/client";
 import { ISODateString } from 'next-auth';
 import { conversationPopulated, participantPopulated } from '../graphql/resolvers/conversation';
 import { Context } from 'graphql-ws/lib/server'

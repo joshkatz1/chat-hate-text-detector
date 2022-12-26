@@ -5,14 +5,12 @@ import { ApolloProvider } from '@apollo/client';
 import { theme } from "../chakra/theme";
 import { client } from "../graphql/apollo-client";
 import { Toaster } from "react-hot-toast";
-import { RecoilRoot } from 'recoil';
 
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <RecoilRoot>
     <ApolloProvider client={client}>
     <SessionProvider session={session}>
       <ChakraProvider theme={theme} cssVarsRoot="body">
@@ -21,6 +19,5 @@ export default function App({
       </ChakraProvider>
     </SessionProvider>
       </ApolloProvider>
-      </RecoilRoot>
   );
 }
