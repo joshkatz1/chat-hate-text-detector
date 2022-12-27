@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "engines": {"node":"^18.12.0"}
-  ,
+  "engines": {"node":"^18.12.0","npm":"^8.19.2"},
+  
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "npx prisma generate --schema=src/schema/schema.prisma && tsc",
+    "build": "npx prisma generate --schema=src/schema/schema.prisma && nvm install 18.12.0 --ignore-engines && tsc",
     "start": "node src/index.ts"
 
   },
