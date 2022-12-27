@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "npx prisma generate --schema=src/schema/schema.prisma  && tsc",
-    "start": "node src/index.ts"
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
