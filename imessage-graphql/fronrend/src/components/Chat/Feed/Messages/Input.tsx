@@ -26,6 +26,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
       }
     );
     const result = await response.json();
+    console.log(result);
     if (result && result[0] && result[0][0]) {
       const label_value = result[0][0]["label"]
       const label = label_value.split("_")[1]
