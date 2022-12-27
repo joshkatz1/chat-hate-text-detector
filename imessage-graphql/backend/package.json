@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {"node":"^18.0.0"}
+  ,
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "npx prisma generate --schema=src/schema/schema.prisma && tsc",
