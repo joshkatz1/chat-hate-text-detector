@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
-    "build": "npx prisma generate --schema=src/schema/schema.prisma && tsc"
+    "build": "npx prisma generate --schema=src/schema/schema.prisma && tsc",
+    "start": "node src/index.ts"
 
   },
   "keywords": [],
