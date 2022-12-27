@@ -5,7 +5,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { getSession } from 'next-auth/react';
 
 const httpLink = new HttpLink({
-    uri: 'http://localhost:4000/graphql',
+    uri: 'chat-hate-text-detector-production.up.railway.app',
     credentials: 'include',
 
 });
